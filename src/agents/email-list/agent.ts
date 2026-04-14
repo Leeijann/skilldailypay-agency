@@ -107,15 +107,15 @@ async function applyTag(contactId: number, tagName: string): Promise<void> {
       const tags = await systemeio.listTags();
       _tagCache = tags?.items || [];
     }
-    let tag = _tagCache.find((t: any) => t.name === tagName);
+    let tag = _tagCache!.find((t: any) => t.name === tagName);
     if (!tag) {
       try {
         tag = await systemeio.createTag(tagName);
-        _tagCache.push(tag);
+        _tagCache!.push(tag);
       } catch (e: any) {
         if (e.message.includes("upgrade")) {
           // Free plan — use "Legacy" tag as fallback for all subscribers
-          tag = _tagCache.find((t: any) => t.name === "Legacy");
+          tag = _tagCache!.find((t: any) => t.name === "Legacy");
           if (!tag) return;
         } else {
           throw e;
