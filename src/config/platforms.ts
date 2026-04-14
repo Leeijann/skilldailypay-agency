@@ -63,10 +63,9 @@ export const PLATFORMS: Record<string, PlatformConfig> = {
 
 /** YouTube channel configuration */
 export const YOUTUBE_CHANNELS = [
-  { name: "SkillDailyPay Main", focus: "Legacy Builders Program" },
-  { name: "Channel 2", focus: "TBD" },
-  { name: "Channel 3", focus: "TBD" },
-  { name: "Channel 4", focus: "TBD" },
+  { name: "SO ADORABLE (Smooth Cut)", focus: "Cute/adorable animal & baby content", blotoatoAccountId: 33403 },
+  { name: "The Health Corner", focus: "Health tips & wellness content", blotoatoAccountId: 33404 },
+  { name: "Affiliate World", focus: "Affiliate marketing & online business", blotoatoAccountId: 33406 },
 ];
 
 /** Blog configuration */

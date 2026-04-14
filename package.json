@@ -5,22 +5,41 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts",
-    "jake": "ts-node src/index.ts --agent jake",
-    "daily": "ts-node src/index.ts --daily-run"
+    "start": "npx tsx src/telegram/bot.ts",
+    "dev": "npx tsx src/index.ts",
+    "bot": "npx tsx src/telegram/bot.ts",
+    "post": "npx tsx post-all.ts",
+    "post:blog-promo": "npx tsx src/platforms/blogger-promo.ts",
+    "email": "npx tsx src/agents/email-list/agent.ts",
+    "email:stats": "npx tsx src/agents/email-list/agent.ts stats",
+    "email:lead-magnet": "npx tsx src/agents/email-list/agent.ts lead-magnet",
+    "video": "npx tsx post-video.ts",
+    "video:tiktok": "npx tsx post-video.ts tiktok",
+    "video:youtube": "npx tsx post-video.ts youtube",
+    "deploy:all": "npx tsx deploy-all.ts",
+    "deploy": "npx tsx src/orchestrator/deploy-all.ts",
+    "deploy:fb": "npx tsx src/orchestrator/deploy-all.ts --facebook-only",
+    "deploy:dry": "npx tsx src/orchestrator/deploy-all.ts --dry-run",
+    "status": "npx tsx src/orchestrator/agency.ts status",
+    "tree": "npx tsx src/orchestrator/agency.ts tree",
+    "knowledge": "npx tsx src/knowledge/cli.ts",
+    "jake": "npx tsx src/agents/jake/index.ts",
+    "jake:daemon": "npx tsx src/agents/jake/index.ts --daemon",
+    "jake:schedule": "npx tsx src/agents/jake/index.ts --schedule",
+    "daily": "npx tsx src/index.ts --daily-run"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
     "dotenv": "^16.4.7",
     "node-cron": "^3.0.3",
     "telegraf": "^4.16.3",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
     "winston": "^3.17.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
     "@types/node-cron": "^3.0.11",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.7.0"
+    "ts-node": "^10.9.2"
   }
 }

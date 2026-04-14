@@ -62,6 +62,9 @@ export const env = {
     twitter: {
       apiKey: optional("TWITTER_API_KEY"),
       apiSecret: optional("TWITTER_API_SECRET"),
+      bearerToken: optional("TWITTER_BEARER_TOKEN"),
+      accessToken: optional("TWITTER_ACCESS_TOKEN"),
+      accessTokenSecret: optional("TWITTER_ACCESS_TOKEN_SECRET"),
     },
     pinterest: { accessToken: optional("PINTEREST_ACCESS_TOKEN") },
     linkedin: { accessToken: optional("LINKEDIN_ACCESS_TOKEN") },
@@ -71,6 +74,46 @@ export const env = {
   tiktokShop: {
     appKey: optional("TIKTOK_SHOP_APP_KEY"),
     appSecret: optional("TIKTOK_SHOP_APP_SECRET"),
+  },
+
+  // Creative — Image/Video generation
+  creative: {
+    xaiApiKey: optional("XAI_API_KEY"),
+  },
+
+  // Systeme.io
+  systemeio: {
+    apiKey: optional("SYSTEMEIO_API_KEY"),
+  },
+
+  // Blogger
+  blogger: {
+    clientId: optional("BLOGGER_CLIENT_ID"),
+    clientSecret: optional("BLOGGER_CLIENT_SECRET"),
+    redirectUri: optional("BLOGGER_REDIRECT_URI"),
+  },
+
+  // Buffer
+  buffer: {
+    accessToken: optional("BUFFER_ACCESS_TOKEN"),
+  },
+
+  // Facebook App
+  facebook: {
+    appId: optional("FACEBOOK_APP_ID"),
+    appSecret: optional("FACEBOOK_APP_SECRET"),
+  },
+
+  // AISA — Multi-model gateway
+  aisa: {
+    apiKey: optional("AISA_API_KEY"),
+    baseUrl: optional("AISA_BASE_URL", "https://api.aisa.one/v1"),
+  },
+
+  // Blotato — Universal social media posting
+  blotato: {
+    apiKey: optional("BLOTATO_API_KEY"),
+    baseUrl: optional("BLOTATO_BASE_URL", "https://backend.blotato.com/v2"),
   },
 
   // Finance
