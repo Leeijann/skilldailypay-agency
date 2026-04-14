@@ -77,7 +77,7 @@ async function genNicheImage(brand: BrandNiche, topic: string): Promise<string> 
     "tiktok-ironrive": `Dramatic close-up of confident person, ${topic}, dark moody lighting with gold accents, wealth and success aesthetic, cinematic vertical composition, photorealistic 4K`,
     "tiktok-trendz": `Vibrant trending aesthetic collage, ${topic}, neon colors, Gen-Z pop culture vibes, social media aesthetic, eye-catching bold design, photorealistic 4K`,
     "yt-adorable": `Incredibly cute ${topic}, warm soft lighting, adorable heartwarming scene, high-quality animal photography, National Geographic quality, photorealistic 4K`,
-    "yt-health": `Clean healthy lifestyle scene, ${topic}, fresh fruits vegetables and wellness items, bright natural lighting, health and vitality aesthetic, photorealistic 4K`,
+    "yt-health": `Aesthetic meal prep scene, ${topic}, clean white kitchen countertop, fresh colorful ingredients neatly arranged, glass containers with prepped meals, overhead flat-lay food photography, bright natural lighting, ASMR food prep aesthetic, photorealistic 4K`,
   };
 
   const prompt = nichePrompts[brand.id] || `${topic}, professional quality, photorealistic 4K`;
@@ -105,7 +105,7 @@ async function submitVideo(brand: BrandNiche, topic: string, aspectRatio: "portr
     "tiktok-ironrive": `${topic}, confident person speaking to camera, motivational mood, dark luxury background, cinematic lighting, vertical video, smooth camera movement, photorealistic`,
     "tiktok-trendz": `${topic}, fast-paced trending content, colorful vibrant aesthetic, Gen-Z style, vertical video, dynamic camera angles, photorealistic`,
     "yt-adorable": `${topic}, cute adorable animals, warm soft lighting, heartwarming scene, gentle camera movement, National Geographic quality, photorealistic`,
-    "yt-health": `${topic}, healthy lifestyle, person preparing nutritious food, bright natural kitchen, smooth camera pan, wellness aesthetic, photorealistic 4K`,
+    "yt-health": `${topic}, aesthetic ASMR meal prep video, hands preparing fresh ingredients on clean white countertop, overhead camera angle, glass meal prep containers, satisfying food preparation sequence, bright natural kitchen lighting, vertical video, smooth close-up shots, photorealistic 4K`,
   };
 
   const prompt = videoPrompts[brand.id] || `${topic}, cinematic quality, photorealistic`;
