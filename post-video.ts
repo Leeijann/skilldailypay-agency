@@ -55,15 +55,15 @@ async function genCaption(platform: string, account: string, topic: string): Pro
 
 // ── Video Generation ──
 
-async function submitVideo(prompt: string, seconds = 5): Promise<string> {
+async function submitVideo(prompt: string, seconds = 60): Promise<string> {
   const res = await fetch("https://api.together.xyz/v2/videos", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${TOGETHER_KEY}` },
     body: JSON.stringify({
       model: "Wan-AI/wan2.7-t2v",
       prompt,
-      height: 720,
-      width: 1280,
+      height: 1280,
+      width: 720,
       seconds: String(seconds),
       output_format: "MP4",
     }),
@@ -73,7 +73,7 @@ async function submitVideo(prompt: string, seconds = 5): Promise<string> {
   return d.id;
 }
 
-async function pollVideo(jobId: string, maxWait = 600000): Promise<string> {
+async function pollVideo(jobId: string, maxWait = 1200000): Promise<string> {
   const start = Date.now();
   while (Date.now() - start < maxWait) {
     const res = await fetch(`https://api.together.xyz/v2/videos/${jobId}`, {
@@ -135,17 +135,22 @@ async function main() {
   console.log("🎨 Generating AI videos (Wan 2.7 via Together.ai)...\n");
 
   if (target === "tiktok" || target === "all") {
-    // TikTok — vertical 9:16
+    // TikTok — vertical 9:16, 15s
     for (const acct of ACCOUNTS.tiktok) {
       try {
         const caption = await genCaption("TikTok", acct.name, topic);
         console.log(`\n📱 TikTok: ${acct.name}`);
         console.log(`  Caption: ${caption.slice(0, 80)}...`);
 
+        const tiktokPrompts: Record<string, string> = {
+          "ironrive1": `${topic}, confident person speaking to camera, motivational mood, dark luxury background, cinematic lighting, vertical video, smooth camera movement, photorealistic`,
+          "tren_dz": `${topic}, fast-paced trending content, colorful vibrant aesthetic, Gen-Z style, vertical video, dynamic camera angles, photorealistic`,
+        };
+
         const videoUrl = await generateVideo(
-          `${topic}, vertical video, person working on laptop, energetic motivational mood, cinematic lighting, smooth camera movement, photorealistic`,
+          tiktokPrompts[acct.name] || `${topic}, vertical video, energetic mood, cinematic lighting, photorealistic`,
           acct.name,
-          5
+          15
         );
 
         await postBlotato({
@@ -171,7 +176,7 @@ async function main() {
   }
 
   if (target === "youtube" || target === "all") {
-    // YouTube — landscape 16:9
+    // YouTube — vertical 9:16 Shorts (60s+)
     for (const acct of ACCOUNTS.youtube) {
       try {
         const caption = await genCaption("YouTube", acct.name, topic);
@@ -181,10 +186,17 @@ async function main() {
         console.log(`\n📺 YouTube: ${acct.name}`);
         console.log(`  Title: ${title}`);
 
+        // Niche-specific video prompts
+        const ytPrompts: Record<string, string> = {
+          "SO ADORABLE": `${topic}, cute adorable animals, warm soft lighting, heartwarming scene, gentle camera movement, National Geographic quality, photorealistic`,
+          "The Health Corner": `${topic}, aesthetic ASMR meal prep video, hands preparing fresh ingredients on clean white countertop, overhead camera angle, glass meal prep containers, satisfying food preparation sequence, bright natural kitchen lighting, vertical video, smooth close-up shots, photorealistic 4K`,
+        };
+        const videoPrompt = ytPrompts[acct.name] || `${topic}, cinematic quality, photorealistic, 4K`;
+
         const videoUrl = await generateVideo(
-          `${topic}, cinematic wide shot, entrepreneur lifestyle, motivational, professional lighting, smooth drone-like camera movement, photorealistic, 4K quality`,
+          videoPrompt,
           acct.name,
-          5
+          60
         );
 
         await postBlotato({

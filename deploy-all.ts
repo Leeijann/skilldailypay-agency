@@ -101,6 +101,10 @@ async function genNicheImage(brand: BrandNiche, topic: string): Promise<string> 
 async function submitVideo(brand: BrandNiche, topic: string, aspectRatio: "portrait" | "landscape"): Promise<string> {
   const isPortrait = aspectRatio === "portrait";
 
+  // YouTube = 60s minimum, TikTok = 15s
+  const isYouTube = brand.id.startsWith("yt-");
+  const duration = isYouTube ? "60" : "15";
+
   const videoPrompts: Record<string, string> = {
     "tiktok-ironrive": `${topic}, confident person speaking to camera, motivational mood, dark luxury background, cinematic lighting, vertical video, smooth camera movement, photorealistic`,
     "tiktok-trendz": `${topic}, fast-paced trending content, colorful vibrant aesthetic, Gen-Z style, vertical video, dynamic camera angles, photorealistic`,
@@ -110,6 +114,8 @@ async function submitVideo(brand: BrandNiche, topic: string, aspectRatio: "portr
 
   const prompt = videoPrompts[brand.id] || `${topic}, cinematic quality, photorealistic`;
 
+  console.log(`  ⏱️  Duration: ${duration}s (${isYouTube ? "YouTube" : "TikTok"})`);
+
   const res = await fetch("https://api.together.xyz/v2/videos", {
     method: "POST", headers: TH,
     body: JSON.stringify({
@@ -117,7 +123,7 @@ async function submitVideo(brand: BrandNiche, topic: string, aspectRatio: "portr
       prompt,
       height: isPortrait ? 1280 : 720,
       width: isPortrait ? 720 : 1280,
-      seconds: "5",
+      seconds: duration,
       output_format: "MP4",
     }),
   });
@@ -126,7 +132,7 @@ async function submitVideo(brand: BrandNiche, topic: string, aspectRatio: "portr
   return d.id;
 }
 
-async function pollVideo(jobId: string, label: string, maxWait = 600000): Promise<string> {
+async function pollVideo(jobId: string, label: string, maxWait = 1200000): Promise<string> {
   const start = Date.now();
   while (Date.now() - start < maxWait) {
     const res = await fetch(`https://api.together.xyz/v2/videos/${jobId}`, { headers: { Authorization: `Bearer ${TOGETHER_KEY}` } });
